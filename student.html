@@ -14,8 +14,8 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to right, #2b5876, #4e4376);
-      color: #fff;
+      background: #ffffff;
+      color: #2c3e50;
       padding: 30px 20px;
       min-height: 100vh;
     }
@@ -25,9 +25,19 @@
       font-size: 2.8rem;
       font-weight: 700;
       margin-bottom: 40px;
-      color: #ffffff;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-      letter-spacing: 1px;
+      color: #002d5a;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    header::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 4px;
+      margin: 15px auto 0;
+      background: #0056b3;
+      border-radius: 2px;
     }
 
     .grid-container {
@@ -39,11 +49,11 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.08);
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
       border-radius: 16px;
       overflow: hidden;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       transform: translateY(40px);
       opacity: 0;
@@ -52,7 +62,7 @@
 
     .card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
     }
 
     .card img {
@@ -64,11 +74,22 @@
 
     .label {
       padding: 15px;
-      background-color: rgba(255, 255, 255, 0.85);
-      color: #111;
+      background-color: #f8f9fa;
+      color: #333;
       font-weight: bold;
       font-size: 1.1rem;
       text-align: center;
+      position: relative;
+    }
+
+    .label::before {
+      content: "★";
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #0056b3;
+      font-size: 1rem;
     }
 
     @keyframes fadeUp {
@@ -119,15 +140,8 @@
     <div class="card fadeup"><img src="orpcare sports.png" alt=""><div class="label">Sports After Class</div></div>
     <div class="card fadeup"><img src="dance.jpg" alt=""><div class="label">Cultural Dancing</div></div>
     <div class="card fadeup"><img src="lll.png" alt=""><div class="label">Science Laboratory</div></div>
-    <div class="card fadeup"><img src="library_reading.jpg" alt=""><div class="label">Library Reading Hour</div></div>
-    <div class="card fadeup"><img src="art_class.jpg" alt=""><div class="label">Creative Arts Class</div></div>
+    <div class="card fadeup"><img src="orpcare library.jpg" alt=""><div class="label">Library Reading Hour</div></div>
     <div class="card fadeup"><img src="c lab.jpg" alt=""><div class="label">Computer Lab Session</div></div>
-    <div class="card fadeup"><img src="morning_assembly.jpg" alt=""><div class="label">Morning Assembly</div></div>
-    <div class="card fadeup"><img src="gardening_club.jpg" alt=""><div class="label">Gardening Club</div></div>
-    <div class="card fadeup"><img src="music_practice.jpg" alt=""><div class="label">Music Practice</div></div>
-    <div class="card fadeup"><img src="drama_rehearsal.jpg" alt=""><div class="label">Drama Rehearsal</div></div>
-    <div class="card fadeup"><img src="language_lab.jpg" alt=""><div class="label">Language Lab</div></div>
-    <div class="card fadeup"><img src="team_meeting.jpg" alt=""><div class="label">Team Leadership Meeting</div></div>
   </div>
 
   <script>
