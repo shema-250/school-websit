@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily School Life - OPSS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #2b5876, #4e4376);
+      color: #fff;
+      padding: 30px 20px;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: #ffffff;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      letter-spacing: 1px;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transform: translateY(40px);
+      opacity: 0;
+      animation: fadeUp 1s ease-out forwards;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .label {
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.85);
+      color: #111;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        font-size: 2.2rem;
+      }
+
+      .card img {
+        height: 160px;
+      }
+
+      .label {
+        font-size: 1rem;
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 15px;
+      }
+
+      header {
+        font-size: 1.8rem;
+      }
+
+      .label {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>Daily School Life</header>
+
+  <div class="grid-container">
+    <div class="card fadeup"><img src="orpcare.class.png" alt=""><div class="label">Daily Classroom</div></div>
+    <div class="card fadeup"><img src="ggg.png" alt=""><div class="label">Graduation 2023</div></div>
+    <div class="card fadeup"><img src="Screenshot 2025-05-01 181106.png" alt=""><div class="label">School Trip at Genocide Memorial Site</div></div>
+    <div class="card fadeup"><img src="orpcare sports.png" alt=""><div class="label">Sports After Class</div></div>
+    <div class="card fadeup"><img src="dance.jpg" alt=""><div class="label">Cultural Dancing</div></div>
+    <div class="card fadeup"><img src="lll.png" alt=""><div class="label">Science Laboratory</div></div>
+    <div class="card fadeup"><img src="library_reading.jpg" alt=""><div class="label">Library Reading Hour</div></div>
+    <div class="card fadeup"><img src="art_class.jpg" alt=""><div class="label">Creative Arts Class</div></div>
+    <div class="card fadeup"><img src="c lab.jpg" alt=""><div class="label">Computer Lab Session</div></div>
+    <div class="card fadeup"><img src="morning_assembly.jpg" alt=""><div class="label">Morning Assembly</div></div>
+    <div class="card fadeup"><img src="gardening_club.jpg" alt=""><div class="label">Gardening Club</div></div>
+    <div class="card fadeup"><img src="music_practice.jpg" alt=""><div class="label">Music Practice</div></div>
+    <div class="card fadeup"><img src="drama_rehearsal.jpg" alt=""><div class="label">Drama Rehearsal</div></div>
+    <div class="card fadeup"><img src="language_lab.jpg" alt=""><div class="label">Language Lab</div></div>
+    <div class="card fadeup"><img src="team_meeting.jpg" alt=""><div class="label">Team Leadership Meeting</div></div>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.fadeup');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationDelay = `${index * 0.1}s`;
+          entry.target.classList.remove('fadeup');
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    cards.forEach(card => observer.observe(card));
+  </script>
+
+</body>
+</html>

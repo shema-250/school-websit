@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Orpcare Secondary School</title>
+  <link rel="stylesheet" href="school.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      color: #343a40;
+    }
+    header.top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #002d5a;
+      padding: 10px 30px;
+      color: white;
+    }
+    .logo {
+      height: 60px;
+    }
+    .title {
+      flex: 1;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .search-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    nav.nav-bar {
+      background: #00509e;
+    }
+    nav.nav-bar ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      margin: 0;
+      padding: 10px 20px;
+    }
+    nav.nav-bar li {
+      margin: 0 15px;
+    }
+    nav.nav-bar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .apply-btn {
+      background-color: #ffc107;
+      padding: 10px 15px;
+      border-radius: 5px;
+      color: #002d5a;
+      font-weight: bold;
+    }
+    .slider {
+      position: relative;
+      overflow: hidden;
+    }
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .slide {
+      min-width: 100%;
+    }
+    .slide img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+    .btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      font-size: 30px;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .btn-left {
+      left: 10px;
+    }
+    .btn-right {
+      right: 10px;
+    }
+    .vision-mission {
+      position: relative;
+      background: url('child') no-repeat center center/cover;
+      height: 300px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .vision-mission::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 45, 90, 0.8);
+      z-index: 1;
+    }
+    .vision-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      animation: fadeInUp 1s ease forwards;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 40px 20px;
+    }
+    .text-section {
+      flex: 1;
+      min-width: 300px;
+      padding-right: 20px;
+    }
+    .image-section img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 20px;
+      flex: 1 1 300px;
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .footer {
+      background: #002d5a;
+      color: white;
+      padding: 40px 20px;
+    }
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .footer-links, .footer-contact {
+      flex: 1 1 200px;
+      margin-bottom: 20px;
+    }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <header class="top-bar">
+      <img src="logo2.png" alt="School Logo" class="logo">
+      <h1 class="title">ORPCARE SECONDARY SCHOOL</h1>
+      <div class="search-icon">🔍</div>
+    </header>
+
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="admission.html">Admissions</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="student.html">Student Life</a></li>
+        <li><a href="#">Community</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="apply.html" class="apply-btn">APPLY NOW</a></li>
+      </ul>
+    </nav>
+
+    <div class="slider">
+      <div class="slider-track" id="sliderTrack">
+        <div class="slide"><img src="bulding 5.jpg" alt="Slide 1"></div>
+        <div class="slide"><img src="child.jpg" alt="Slide 2"></div>
+        <div class="slide"><img src="kid 4.jpg" alt="Slide 3"></div>
+        <div class="slide"><img src="kid 5.jpg" alt="Slide 4"></div>
+        <div class="slide"><img src="ggg.png" alt="Slide 5"></div>
+      </div>
+      <button class="btn btn-left" onclick="moveSlide(-1)">❮</button>
+      <button class="btn btn-right" onclick="moveSlide(1)">❯</button>
+    </div>
+
+    <section class="vision-mission" id="visionMission">
+      <div class="vision-content">
+        <h1>Our Vision</h1>
+        <h2>Raising generations of Christian Leaders</h2>
+        <h1>Our Mission</h1>
+        <p>
+          Our mission is raising the next generation in fear of God while providing holistic Christian education
+          that promotes academic excellence, meeting the individualized need of each child. Supporting a model
+          high-quality international level school offering a cost-effective, broad, and challenging Christian
+          educational program to students in Rwanda.
+        </p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="text-section" id="about-section">
+        <h2>About OPSS - K</h2>
+        <p>
+          Welcome to Orpcare Primary and Secondary School (OPSS). We offer an ACE value-based, child-centered curriculum that supports holistic needs of a child’s development.
+          Our experienced supervisors and monitors facilitate academic, social, emotional and cognitive growth, for ‘learning for impact’.
+          Children learn through play, exploration, projects, case studies, and in bright, inviting classrooms and charming outdoor spaces.
+          We provide a safe, caring, and stimulating learning environment. Our educational philosophy is built on principles of the Word of God.
+          Students are taught to see life from God’s perspective, to take responsibility for their own learning, and to walk in Godly wisdom and character.
+        </p>
+      </div>
+      <div class="image-section">
+        <img src="kid 5.jpg" alt="Kids Playing">
+      </div>
+    </div>
+
+    <h2 style="text-align:center;">OUR PROGRAMS</h2>
+    <div class="container">
+      <div class="card">
+        <img src="primary school.jpeg" alt="Primary Section">
+        <h2>Primary Section</h2>
+        <p>
+          Provides a nurturing and engaging environment for young learners to develop a strong foundation in academic and social skills.
+        </p>
+      </div>
+      <div class="card">
+        <img src="ggg.png" alt="Secondary Section">
+        <h2>Secondary Section</h2>
+        <p>
+          Divided into two levels - Ordinary Level (O level) and Advanced Level (A level). Offers a rigorous and comprehensive curriculum.
+        </p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Apply</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h3>Contact Us</h3>
+          <p>Email: shemaprince2008@gmail.com</p>
+          <p>Phone: +250 791839258</p>
+          <p>Address: Kigali, Rwanda</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Orpcare Secondary School. Designed by <strong>Prince Company</strong>.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      let currentIndex = 0;
+      const track = document.getElementById('sliderTrack');
+      const slides = document.querySelectorAll('.slide');
+      const totalSlides = slides.length;
+
+      function moveSlide(direction) {
+        currentIndex += direction;
+        if (currentIndex < 0) currentIndex = totalSlides - 1;
+        if (currentIndex >= totalSlides) currentIndex = 0;
+        updateSlidePosition();
+      }
+
+      function updateSlidePosition() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+
+      setInterval(() => {
+        moveSlide(1);
+      }, 3000);
+
+      window.addEventListener('scroll', function () {
+        const section = document.getElementById('about-section');
+        const sectionTop = section.getBoundingClientRect().top;
+        const triggerPoint = window.innerHeight - 100;
+        if (sectionTop < triggerPoint) {
+          section.classList.add('visible');
+        }
+      });
+    </script>
+  </div>
+</body>
+</html>

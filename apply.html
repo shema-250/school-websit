@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Orpcare Secondary School Enrollment Application">
+  <title>Orpcare Application</title>
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    /* Theme variables */
+    :root {
+      --bg-color: #1e1e1e; /* Black theme background */
+      --text-color: #ffffff; /* Black theme text */
+      --card-bg: #2d2d2d; /* Black theme cards */
+      --accent-color: #047857; /* Green accent */
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --progress-bg: #444;
+    }
+    .light-theme {
+      --bg-color: #f8fafc;
+      --text-color: #333333;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --progress-bg: #e0e0e0;
+    }
+
+    /* Reset default styles */
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-fade {
+      animation: fadeIn 0.8s ease-in-out forwards;
+    }
+    .animate-slide-up {
+      animation: slideUp 0.5s ease-in-out forwards;
+    }
+
+    /* Form container */
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px var(--shadow-color);
+      animation: fadeIn 1s ease-in-out;
+      flex: 1;
+    }
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin: 0 0 20px;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .progress-step {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      background: var(--progress-bg);
+      color: var(--text-color);
+      font-size: 14px;
+      border-radius: 5px;
+      margin: 0 5px;
+      transition: background 0.3s;
+    }
+    .progress-step.active {
+      background: var(--accent-color);
+      color: #fff;
+    }
+
+    /* Form steps */
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .form-step h2 {
+      font-size: 18px;
+      margin: 0 0 15px;
+    }
+    label {
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="radio"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid var(--shadow-color);
+      border-radius: 5px;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    input[type="radio"] {
+      width: auto;
+      margin-right: 5px;
+    }
+    input[required]::after {
+      content: " *";
+      color: var(--accent-color);
+    }
+    .radio-group {
+      margin-bottom: 15px;
+    }
+
+    /* Buttons */
+    button {
+      background: var(--accent-color);
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: transform 0.3s, background 0.3s;
+      margin: 5px;
+    }
+    button:hover {
+      background: #03543f;
+      transform: scale(1.05);
+    }
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .prev-btn {
+      background: #ccc;
+      color: #333;
+    }
+    .prev-btn:hover {
+      background: #aaa;
+      transform: scale(1.05);
+    }
+
+    /* Payment modal */
+    .payment-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .payment-modal.active {
+      display: flex;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .modal-content {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 450px;
+      width: 90%;
+      box-shadow: 0 4px 15px var(--shadow-color);
+      animation: slideUp 0.5s ease-in-out;
+    }
+    .modal-content h3 {
+      font-size: 20px;
+      margin: 0 0 15px;
+    }
+    .modal-content label {
+      font-size: 14px;
+    }
+    .modal-content input, .modal-content select {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .modal-content button {
+      width: 100%;
+    }
+    .close-modal {
+      background: #ccc;
+      color: #333;
+    }
+    .close-modal:hover {
+      background: #aaa;
+      transform: scale(1.05);
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 24px;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      transition: transform 0.3s;
+      z-index: 1001;
+    }
+    .theme-toggle:hover {
+      transform: rotate(360deg);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-color);
+      border-radius: 3px;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .progress-step {
+        font-size: 12px;
+        padding: 8px;
+      }
+      .modal-content {
+        width: 95%;
+        padding: 15px;
+      }
+      button {
+        padding: 8px 15px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme toggle -->
+  <button class="theme-toggle" aria-label="Toggle Theme" onclick="toggleTheme()">🌙</button>
+
+  <div class="form-container">
+    <h1>Orpcare Application</h1>
+    <form id="application-form" action="submit_application.php" method="POST">
+      <!-- Progress bar -->
+      <div class="progress-bar">
+        <div class="progress-step active" data-step="1">Student Info</div>
+        <div class="progress-step" data-step="2">Parent Info</div>
+        <div class="progress-step" data-step="3">Payment</div>
+      </div>
+
+      <!-- Step 1: Student Information -->
+      <div class="form-step active" id="step-1">
+        <h2>Student Information</h2>
+        <label for="first_name">First Name *:</label>
+        <input type="text" id="first_name" name="first_name" required>
+        <label for="middle_name">Middle Name:</label>
+        <input type="text" id="middle_name" name="middle_name">
+        <label for="last_name">Last Name *:</label>
+        <input type="text" id="last_name" name="last_name" required>
+        <label for="preferred_name">Preferred Name *:</label>
+        <input type="text" id="preferred_name" name="preferred_name" required>
+        <label for="dob">Date of Birth *:</label>
+        <input type="date" id="dob" name="dob" required>
+        <label>Gender *:</label>
+        <div class="radio-group">
+          <input type="radio" id="female" name="gender" value="female" required> Female
+          <input type="radio" id="male" name="gender" value="male" required> Male
+        </div>
+        <label for="nationality">Nationality *:</label>
+        <input type="text" id="nationality" name="nationality" required>
+        <label for="applying_for">Applying For *:</label>
+        <input type="text" id="applying_for" name="applying_for" required>
+        <button type="button" onclick="nextStep(2)">Next</button>
+      </div>
+
+      <!-- Step 2: Parent/Guardian Information -->
+      <div class="form-step" id="step-2">
+        <h2>Parent/Guardian Information</h2>
+        <label for="parent_title">Title *:</label>
+        <input type="text" id="parent_title" name="parent_title" required>
+        <label for="parent_gender">Gender *:</label>
+        <input type="text" id="parent_gender" name="parent_gender" required>
+        <label for="parent_first_name">First Name *:</label>
+        <input type="text" id="parent_first_name" name="parent_first_name" required>
+        <label for="parent_last_name">Last Name *:</label>
+        <input type="text" id="parent_last_name" name="parent_last_name" required>
+        <label for="parent_nationality">Nationality *:</label>
+        <input type="text" id="parent_nationality" name="parent_nationality" required>
+        <label for="relationship">Relationship to Applicant *:</label>
+        <input type="text" id="relationship" name="relationship" required>
+        <label for="email">Email *:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="phone_number">Phone Number *:</label>
+        <input type="text" id="phone_number" name="phone_number" required>
+        <label for="whatsapp_number">WhatsApp Number:</label>
+        <input type="text" id="whatsapp_number" name="whatsapp_number">
+        <label for="state">State/Province *:</label>
+        <input type="text" id="state" name="state" required>
+        <label for="city">City *:</label>
+        <input type="text" id="city" name="city" required>
+        <label for="referral">How did you learn about the school?</label>
+        <input type="text" id="referral" name="referral">
+        <button type="button" class="prev-btn" onclick="prevStep(1)">Previous</button>
+        <button type="button" onclick="nextStep(3)">Next</button>
+      </div>
+
+      <!-- Step 3: Payment -->
+      <div class="form-step" id="step-3">
+        <h2>Payment (5000 RWF)</h2>
+        <p>Complete the application fee payment to submit your application.</p>
+        <button type="button" onclick="openPaymentModal()">Pay Now (5000 RWF)</button>
+        <button type="submit" id="submit-btn" disabled>Submit Application</button>
+        <button type="button" class="prev-btn" onclick="prevStep(2)">Previous</button>
+      </div>
+    </form>
+
+    <!-- Payment modal -->
+    <div class="payment-modal" id="payment-modal">
+      <div class="modal-content">
+        <h3>Pay Application Fee (5000 RWF)</h3>
+        <p>Choose a payment method to proceed.</p>
+        <label for="payment-method">Payment Method:</label>
+        <select id="payment-method" name="payment_method">
+          <option value="mobile">MTN Mobile Money</option>
+          <option value="card">Credit/Debit Card</option>
+        </select>
+        <div id="mobile-payment" class="payment-option">
+          <label for="mobile-number">Mobile Number:</label>
+          <input type="text" id="mobile-number" placeholder="+250...">
+        </div>
+        <div id="card-payment" class="payment-option" style="display: none;">
+          <label for="card-number">Card Number:</label>
+          <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+          <label for="expiry">Expiry Date:</label>
+          <input type="text" id="expiry" placeholder="MM/YY">
+          <label for="cvv">CVV:</label>
+          <input type="text" id="cvv" placeholder="123">
+        </div>
+        <button onclick="processPayment()">Pay 5000 RWF</button>
+        <button class="close-modal" onclick="closePaymentModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize EmailJS (replace with your public key)
+    emailjs.init("YOUR_PUBLIC_KEY");
+
+    // Theme toggle
+    function toggleTheme() {
+      document.body.classList.toggle('light-theme');
+      localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+    }
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light-theme');
+    }
+
+    // Form wizard navigation
+    function nextStep(step) {
+      document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+      document.getElementById(`step-${step}`).classList.add('active');
+      document.querySelectorAll('.progress-step').forEach(step => step.classList.remove('active'));
+      document.querySelector(`.progress-step[data-step="${step}"]`).classList.add('active');
+    }
+    function prevStep(step) {
+      document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+      document.getElementById(`step-${step}`).classList.add('active');
+      document.querySelectorAll('.progress-step').forEach(step => step.classList.remove('active'));
+      document.querySelector(`.progress-step[data-step="${step}"]`).classList.add('active');
+    }
+
+    // Payment modal functions
+    let isPaymentCompleted = false;
+    function openPaymentModal() {
+      document.getElementById('payment-modal').classList.add('active');
+    }
+    function closePaymentModal() {
+      document.getElementById('payment-modal').classList.remove('active');
+    }
+    function processPayment() {
+      const method = document.getElementById('payment-method').value;
+      if (method === 'mobile' && !document.getElementById('mobile-number').value) {
+        alert('Please enter a valid mobile number.');
+        return;
+      }
+      if (method === 'card' && (!document.getElementById('card-number').value || !document.getElementById('expiry').value || !document.getElementById('cvv').value)) {
+        alert('Please fill all card details.');
+        return;
+      }
+      // Simulate payment (replace with real gateway, e.g., Flutterwave)
+      alert('Payment of 5000 RWF successful! You can now submit the application.');
+      isPaymentCompleted = true;
+      document.getElementById('submit-btn').disabled = false;
+      closePaymentModal();
+    }
+
+    // Toggle payment options
+    document.getElementById('payment-method').addEventListener('change', function() {
+      const mobilePayment = document.getElementById('mobile-payment');
+      const cardPayment = document.getElementById('card-payment');
+      if (this.value === 'mobile') {
+        mobilePayment.style.display = 'block';
+        cardPayment.style.display = 'none';
+      } else {
+        mobilePayment.style.display = 'none';
+        cardPayment.style.display = 'block';
+      }
+    });
+
+    // Form submission
+    document.getElementById('application-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      if (!isPaymentCompleted) {
+        alert('Please complete the 5000 RWF payment before submitting.');
+        return;
+      }
+      fetch('submit_application.php', {
+        method: 'POST',
+        body: new FormData(this)
+      }).then(response => {
+        if (!response.ok) throw new Error('Backend submission failed');
+        return emailjs.sendForm('service_neun1pw', 'YOUR_TEMPLATE_ID', this);
+      }).then(() => {
+        alert('Application submitted successfully!');
+        this.reset();
+        isPaymentCompleted = false;
+        document.getElementById('submit-btn').disabled = true;
+        nextStep(1); // Reset to first step
+      }).catch(error => {
+        console.error('Submission failed:', error);
+        alert('Submission failed. Please try again.');
+      });
+    });
+  </script>
+</body>
+</html>
